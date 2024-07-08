@@ -1,1 +1,0 @@
-# natatae akouh

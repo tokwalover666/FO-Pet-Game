@@ -19,7 +19,7 @@ public class UIMenuManager : MonoBehaviour
 
     void Update()
     {
-        // Regular updates if needed
+
     }
 
     public void ShowClosetMenu()
@@ -28,19 +28,19 @@ public class UIMenuManager : MonoBehaviour
         mainMenu.DOAnchorPos(new Vector2(-1100, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
     }
 
-    /*    public void ShowMainMenu()
-        {
-            mainMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
-            mainMenu.DOAnchorPos(new Vector2(0, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
-        }
+    public void ShowMainMenu()
+    {
+        mainMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
+        settingsMenu.DOAnchorPos(new Vector2(-1100, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
+    }
 
-        public void ShowSettingsMenu()
-        {
-            settingsMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
-            mainMenu.DOAnchorPos(new Vector2(-1100, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
-        }*/
+    public void ShowSettingsMenu()
+    {
+        settingsMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
+        mainMenu.DOAnchorPos(new Vector2(-1100, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
+    }
 
-    public void ShowSettings()
+/*    public void ShowSettings()
     {
         settingsMenu.SetAsLastSibling();
 
@@ -65,5 +65,5 @@ public class UIMenuManager : MonoBehaviour
         sequence.AppendInterval(0.1f);
         sequence.Append(settingsMenu.DOAnchorPos(new Vector2(-1100, 0), 0, true));
         sequence.Append(settingsMenu.DOScale(Vector2.one, 0)).SetEase(Ease.Linear);
-    }
+    }*/
 }
