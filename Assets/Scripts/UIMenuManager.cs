@@ -6,19 +6,7 @@ using DG.Tweening;
 public class UIMenuManager : MonoBehaviour
 {
     public RectTransform mainMenu, settingsMenu, closetMenu, petProfileMenu;
-
     public float uiTransitionSpeed;
-
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
 
     public void ShowClosetMenu()
     {

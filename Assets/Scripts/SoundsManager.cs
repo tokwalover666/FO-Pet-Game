@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI; // For Button
+using UnityEngine.UI;
 using System.Collections;
 
 public class SoundsManager : MonoBehaviour
@@ -8,17 +8,17 @@ public class SoundsManager : MonoBehaviour
     public AudioClip[] songs;
     private AudioSource audioSource;
     public TMP_Text bubbleText;
-    public Button pokeButton; // Reference to the Poke button
+    public Button pokeButton; 
 
     private int clickCount = 0;
-    private bool isSoundPlaying = false; // Track if a sound is currently playing
-    private bool isSadSoundPlayed = false; // Track if the sad sound has been played
+    private bool isSoundPlaying = false; 
+    private bool isSadSoundPlayed = false; 
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
 
-        // Ensure pokeButton is assigned and has an onClick listener
+
         if (pokeButton != null)
         {
             pokeButton.onClick.AddListener(OnPokeButtonClick);
@@ -36,8 +36,8 @@ public class SoundsManager : MonoBehaviour
         {
             audioSource.clip = clip;
             audioSource.Play();
-            isSoundPlaying = true; // Set flag when sound starts playing
-            StartCoroutine(ResetIsSoundPlaying(audioSource.clip.length)); // Reset flag after sound finishes
+            isSoundPlaying = true; 
+            StartCoroutine(ResetIsSoundPlaying(audioSource.clip.length));
         }
         else
         {
@@ -70,17 +70,17 @@ public class SoundsManager : MonoBehaviour
 
     private void PlaySadSound()
     {
-        if (!isSadSoundPlayed) // Check to ensure sad sound has not been played
+        if (!isSadSoundPlayed)
         {
             PlayCurrentSong("sad");
             StartCoroutine(ShowTemporaryText("I'm sad meow", 1, 6));
-            isSadSoundPlayed = true; // Mark that sad sound has been played
+            isSadSoundPlayed = true; 
         }
     }
 
     public void OnPokeButtonClick()
     {
-        if (isSoundPlaying) return; // Prevent clicks while sound is playing
+        if (isSoundPlaying) return;
 
         clickCount++;
         Debug.Log($"Button clicked. Current click count: {clickCount}");
@@ -96,7 +96,7 @@ public class SoundsManager : MonoBehaviour
         else if (clickCount == 5)
         {
             PlaySadSound();
-            clickCount = 0; // Reset the counter after playing the sad sound
+            clickCount = 0; 
         }
     }
 
@@ -122,10 +122,10 @@ public class SoundsManager : MonoBehaviour
 
     private IEnumerator ResetIsSoundPlaying(float duration)
     {
-        pokeButton.interactable = false; // Disable the button
-        yield return new WaitForSeconds(duration); // Wait for the duration of the sound
-        pokeButton.interactable = true; // Re-enable the button
-        isSoundPlaying = false; // Reset the flag
-        isSadSoundPlayed = false; // Reset the flag to allow sound to be played again
+        pokeButton.interactable = false; 
+        yield return new WaitForSeconds(duration);
+        pokeButton.interactable = true; 
+        isSoundPlaying = false; 
+        isSadSoundPlayed = false;
     }
 }
