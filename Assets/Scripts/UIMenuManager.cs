@@ -25,21 +25,26 @@ public class UIMenuManager : MonoBehaviour
         closetMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
         mainMenu.DOAnchorPos(new Vector2(1100, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
     }
-    public void ShowPetProfile()
-    {
-        petProfileMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
-        mainMenu.DOAnchorPos(new Vector2(-2130, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
-    }
-    public void ShowMainMenuFromSettings()
-    {
-        mainMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
-        settingsMenu.DOAnchorPos(new Vector2(-1130, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
-    }
-
     public void ShowMainMenuFromCloset()
     {
         mainMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
         closetMenu.DOAnchorPos(new Vector2(1130, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
+    }
+    public void ShowSettingsMenuFromCloset()
+    {
+        settingsMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
+        closetMenu.DOAnchorPos(new Vector2(-1100, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
+    }
+    public void ShowPetProfile()
+    {
+        petProfileMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
+        mainMenu.DOAnchorPos(new Vector2(2261, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
+    }
+
+    public void ShowMainMenuFromPetProfile()
+    {
+        mainMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
+        petProfileMenu.DOAnchorPos(new Vector2(2261, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
     }
 
     public void ShowSettingsMenu()
@@ -47,12 +52,12 @@ public class UIMenuManager : MonoBehaviour
         settingsMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
         mainMenu.DOAnchorPos(new Vector2(-1100, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
     }
-
-    public void ShowSettingsMenuFromCloset()
+    public void ShowMainMenuFromSettings()
     {
-        settingsMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
-        closetMenu.DOAnchorPos(new Vector2(-1100, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
+        mainMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
+        settingsMenu.DOAnchorPos(new Vector2(-1130, 0), uiTransitionSpeed, true).SetEase(Ease.Linear);
     }
+
 
     /*    public void ShowSettings()
         {
