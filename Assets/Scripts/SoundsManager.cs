@@ -5,17 +5,19 @@ using System.Collections;
 
 public class SoundsManager : MonoBehaviour
 {
+    public GameObject bubble;
     public AudioClip[] songs;
-    private AudioSource audioSource;
     public TMP_Text bubbleText;
     public Button pokeButton; 
 
+    private AudioSource audioSource;
     private int clickCount = 0;
     private bool isSoundPlaying = false; 
     private bool isSadSoundPlayed = false; 
 
     private void Start()
     {
+        bubble.SetActive(false);
         audioSource = GetComponent<AudioSource>();
 
 
@@ -49,11 +51,16 @@ public class SoundsManager : MonoBehaviour
     {
         PlayCurrentSong("btn_click");
     }
+    public void Button2ClickSound()
+    {
+        PlayCurrentSong("btn_click2");
+    }
 
     public void PlayFeedSound()
     {
         PlayCurrentSong("eat");
         StartCoroutine(ShowTemporaryText("yumm", 1, 3));
+
     }
 
     public void PlayBathSound()
@@ -115,9 +122,11 @@ public class SoundsManager : MonoBehaviour
     private IEnumerator ShowTemporaryText(string text, float delay, float duration)
     {
         yield return new WaitForSeconds(delay);
+        bubble.SetActive(true); 
         bubbleText.text = text;
         yield return new WaitForSeconds(duration);
         bubbleText.text = "";
+        bubble.SetActive(false); 
     }
 
     private IEnumerator ResetIsSoundPlaying(float duration)
