@@ -15,6 +15,7 @@ public class SoundsManager : MonoBehaviour
     private bool isSoundPlaying = false; 
     private bool isSadSoundPlayed = false; 
 
+
     private void Start()
     {
         bubble.SetActive(false);
@@ -119,7 +120,7 @@ public class SoundsManager : MonoBehaviour
         return null;
     }
 
-    private IEnumerator ShowTemporaryText(string text, float delay, float duration)
+    public IEnumerator ShowTemporaryText(string text, float delay, float duration)
     {
         yield return new WaitForSeconds(delay);
         bubble.SetActive(true); 
@@ -136,5 +137,10 @@ public class SoundsManager : MonoBehaviour
         pokeButton.interactable = true; 
         isSoundPlaying = false; 
         isSadSoundPlayed = false;
+    }
+
+    private void healthText()
+    {
+
     }
 }

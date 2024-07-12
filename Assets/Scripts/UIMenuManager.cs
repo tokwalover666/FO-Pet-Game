@@ -11,6 +11,8 @@ public class UIMenuManager : MonoBehaviour
     public float scaleFactor = 1.2f; 
     public float popDuration = 0.2f;
 
+    public HealthBar healthBar;
+
     public void ShowClosetMenu()
     {
         closetMenu.DOAnchorPos(Vector2.zero, uiTransitionSpeed, true).SetEase(Ease.InOutElastic);
@@ -62,6 +64,30 @@ public class UIMenuManager : MonoBehaviour
         Sequence sequence = DOTween.Sequence();
         sequence.Append(button.DOScale(button.localScale * scaleFactor, popDuration).SetEase(Ease.OutQuad));
         sequence.Append(button.DOScale(button.localScale, popDuration).SetEase(Ease.InQuad));
+    }
+
+    public void OnFeedButtonClick(RectTransform button)
+    {
+        PopButton(button);
+        healthBar.IncreaseFeedBar();
+    }
+
+    public void OnPlayButtonClick(RectTransform button)
+    {
+        PopButton(button);
+        healthBar.IncreasePlayBar();
+    }
+
+    public void OnBathButtonClick(RectTransform button)
+    {
+        PopButton(button);
+        healthBar.IncreaseBathBar();
+    }
+
+    public void OnSleepButtonClick(RectTransform button)
+    {
+        PopButton(button);
+        healthBar.IncreaseSleepBar();
     }
 
 }
