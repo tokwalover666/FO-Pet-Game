@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class HealthBar : MonoBehaviour
 {
-    public Slider feedBar;
-    public Slider playBar;
-    public Slider bathBar;
-    public Slider sleepBar;
+    public Image currentHunger;
+    public Image currentHappy;
+    public Image currentClean;
+    public Image currentSleep;
 
     private float hunger = 100;
     private float happy = 100;
@@ -22,17 +21,12 @@ public class HealthBar : MonoBehaviour
 
     public SoundsManager soundManager;
 
-    private bool isShowingHungerText = false;
-    private bool isShowingHappyText = false;
-    private bool isShowingCleanText = false;
-    private bool isShowingSleepText = false;
-
     private void Update()
     {
-        hunger -= .1f * Time.deltaTime;
-        happy -= .5f * Time.deltaTime;
-        clean -= .15f * Time.deltaTime;
-        sleep -= .01f * Time.deltaTime;
+        hunger -= .11f * Time.deltaTime;
+        happy -= .15f * Time.deltaTime;
+        clean -= .115f * Time.deltaTime;
+        sleep -= .10f * Time.deltaTime;
 
         if (hunger < 0) hunger = 0;
         if (happy < 0) happy = 0;
@@ -48,40 +42,45 @@ public class HealthBar : MonoBehaviour
     private void UpdateHungerBar()
     {
         float ratio = hunger / max;
-        feedBar.value = ratio;
-        if (hunger < 50f && !isShowingHungerText)
+        currentHunger.rectTransform.localScale = new Vector3(ratio, 1, 1);
+        if (hunger <= 0.5f) 
         {
-            StartCoroutine(ShowTemporaryText("hungrrry me ow", 1, 3, ref isShowingHungerText));
+            soundManager.ShowTemporaryText("I'm hungry!", 1, 3);
         }
     }
 
     private void UpdateHappyBar()
     {
-        float ratio = happy / max;
-        playBar.value = ratio;
-        if (happy < 50f && !isShowingHappyText)
+        if (soundManager.clickCount >= 2)
         {
-            StartCoroutine(ShowTemporaryText("I'm sad!", 1, 3, ref isShowingHappyText));
+            happy = -1f;
         }
+        float ratio = happy / max;
+        currentHappy.rectTransform.localScale = new Vector3(ratio, 1, 1);
+        if (ratio < 0.5f)
+        {
+            soundManager.ShowTemporaryText("I'm sad!", 1, 3);
+        }
+ 
     }
 
     private void UpdateCleanBar()
     {
         float ratio = clean / max;
-        bathBar.value = ratio;
-        if (clean < 50f && !isShowingCleanText)
+        currentClean.rectTransform.localScale = new Vector3(ratio, 1, 1);
+        if (ratio < 0.5f)
         {
-            StartCoroutine(ShowTemporaryText("I'm dirty!", 1, 3, ref isShowingCleanText));
+            soundManager.ShowTemporaryText("I'm dirty!", 1, 3);
         }
     }
 
     private void UpdateSleepBar()
     {
         float ratio = sleep / max;
-        sleepBar.value = ratio;
-        if (sleep < 50f && !isShowingSleepText)
+        currentSleep.rectTransform.localScale = new Vector3(ratio, 1, 1);
+        if (ratio < 0.5f)
         {
-            StartCoroutine(ShowTemporaryText("I'm sleepy!", 1, 3, ref isShowingSleepText));
+            soundManager.ShowTemporaryText("I'm sleepy!", 1, 3);
         }
     }
 
@@ -111,12 +110,5 @@ public class HealthBar : MonoBehaviour
         sleep += sleepIncrement;
         if (sleep > max) sleep = max;
         UpdateSleepBar();
-    }
-
-    private IEnumerator ShowTemporaryText(string text, float delay, float duration, ref bool isShowingText)
-    {
-        isShowingText = true;
-        yield return soundManager.ShowTemporaryText(text, delay, duration);
-        isShowingText = false;
     }
 }

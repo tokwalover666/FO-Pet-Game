@@ -1,6 +1,6 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using System.Collections;
 
 public class SoundsManager : MonoBehaviour
@@ -8,27 +8,45 @@ public class SoundsManager : MonoBehaviour
     public GameObject bubble;
     public AudioClip[] songs;
     public TMP_Text bubbleText;
-    public Button pokeButton; 
+    public Button[] additionalButtons; // Array to hold other buttons to be disabled
+    public string backgroundMusicName;
+    public AnimationManager animationManager;
 
     private AudioSource audioSource;
-    private int clickCount = 0;
-    private bool isSoundPlaying = false; 
-    private bool isSadSoundPlayed = false; 
-
+    private AudioSource bgmAudioSource;
+    public int clickCount = 0;
 
     private void Start()
     {
         bubble.SetActive(false);
-        audioSource = GetComponent<AudioSource>();
 
-
-        if (pokeButton != null)
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        if (audioSources.Length >= 2)
         {
-            pokeButton.onClick.AddListener(OnPokeButtonClick);
+            audioSource = audioSources[0];
+            bgmAudioSource = audioSources[1];
         }
         else
         {
-            Debug.LogWarning("Poke button is not assigned!");
+            audioSource = gameObject.AddComponent<AudioSource>();
+            bgmAudioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        PlayBackgroundMusic(backgroundMusicName);
+    }
+
+    private void PlayBackgroundMusic(string songName)
+    {
+        AudioClip clip = FindSongByName(songName);
+        if (clip != null)
+        {
+            bgmAudioSource.clip = clip;
+            bgmAudioSource.loop = true;
+            bgmAudioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning($"Background music with name '{songName}' not found.");
         }
     }
 
@@ -38,8 +56,8 @@ public class SoundsManager : MonoBehaviour
         if (clip != null)
         {
             audioSource.clip = clip;
+            audioSource.loop = false;
             audioSource.Play();
-            isSoundPlaying = true; 
             StartCoroutine(ResetIsSoundPlaying(audioSource.clip.length));
         }
         else
@@ -52,6 +70,7 @@ public class SoundsManager : MonoBehaviour
     {
         PlayCurrentSong("btn_click");
     }
+
     public void Button2ClickSound()
     {
         PlayCurrentSong("btn_click2");
@@ -60,52 +79,28 @@ public class SoundsManager : MonoBehaviour
     public void PlayFeedSound()
     {
         PlayCurrentSong("eat");
+        animationManager.PlayFeedAnimation();
         StartCoroutine(ShowTemporaryText("yumm", 1, 3));
+    }
 
+    public void PlayPlaySound()
+    {
+        PlayCurrentSong("play");
+        StartCoroutine(ShowTemporaryText("purrr", 1, 3));
     }
 
     public void PlayBathSound()
     {
         PlayCurrentSong("bath");
+        animationManager.PlayBathAnimation();
         StartCoroutine(ShowTemporaryText("meoww coldd", 1, 3));
     }
 
     public void PlaySleepSound()
     {
         PlayCurrentSong("sleep");
+        animationManager.PlaySleepAnimation();
         StartCoroutine(ShowTemporaryText("mimimimi", 1, 3));
-    }
-
-    private void PlaySadSound()
-    {
-        if (!isSadSoundPlayed)
-        {
-            PlayCurrentSong("sad");
-            StartCoroutine(ShowTemporaryText("I'm sad meow", 1, 6));
-            isSadSoundPlayed = true; 
-        }
-    }
-
-    public void OnPokeButtonClick()
-    {
-        if (isSoundPlaying) return;
-
-        clickCount++;
-        Debug.Log($"Button clicked. Current click count: {clickCount}");
-
-        if (clickCount == 2)
-        {
-            StartCoroutine(ShowTemporaryText("ouch!", 0, 3));
-        }
-        else if (clickCount == 3)
-        {
-            StartCoroutine(ShowTemporaryText("stop poking me!", 0, 5));
-        }
-        else if (clickCount == 5)
-        {
-            PlaySadSound();
-            clickCount = 0; 
-        }
     }
 
     private AudioClip FindSongByName(string songName)
@@ -123,24 +118,32 @@ public class SoundsManager : MonoBehaviour
     public IEnumerator ShowTemporaryText(string text, float delay, float duration)
     {
         yield return new WaitForSeconds(delay);
-        bubble.SetActive(true); 
+        bubble.SetActive(true);
         bubbleText.text = text;
         yield return new WaitForSeconds(duration);
         bubbleText.text = "";
-        bubble.SetActive(false); 
+        bubble.SetActive(false);
     }
 
     private IEnumerator ResetIsSoundPlaying(float duration)
     {
-        pokeButton.interactable = false; 
+        // Disable all relevant buttons
+        DisableButtons(true);
         yield return new WaitForSeconds(duration);
-        pokeButton.interactable = true; 
-        isSoundPlaying = false; 
-        isSadSoundPlayed = false;
+        // Enable all relevant buttons
+        DisableButtons(false);
     }
 
-    private void healthText()
+    private void DisableButtons(bool disable)
     {
 
+        // Disable or enable additional buttons
+        foreach (Button button in additionalButtons)
+        {
+            if (button != null)
+            {
+                button.interactable = !disable;
+            }
+        }
     }
 }
