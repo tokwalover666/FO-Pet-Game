@@ -43,7 +43,7 @@ public class HealthBar : MonoBehaviour
     {
         float ratio = hunger / max;
         currentHunger.rectTransform.localScale = new Vector3(ratio, 1, 1);
-        if (hunger <= 0.5f) 
+        if (hunger <= 0.5f)
         {
             soundManager.ShowTemporaryText("I'm hungry!", 1, 3);
         }
@@ -61,7 +61,7 @@ public class HealthBar : MonoBehaviour
         {
             soundManager.ShowTemporaryText("I'm sad!", 1, 3);
         }
- 
+
     }
 
     private void UpdateCleanBar()

@@ -8,7 +8,7 @@ public class UIMenuManager : MonoBehaviour
     public RectTransform mainMenu, settingsMenu, closetMenu, petProfileMenu;
 
     public float uiTransitionSpeed;
-    public float scaleFactor = 1.2f; 
+    public float scaleFactor = 1.2f;
     public float popDuration = 0.2f;
 
     public HealthBar healthBar;

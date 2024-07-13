@@ -12,6 +12,10 @@ public class SoundsManager : MonoBehaviour
     public string backgroundMusicName;
     public AnimationManager animationManager;
 
+    // Add references to the sliders
+    public Slider soundSlider;
+    public Slider bgmSlider;
+
     private AudioSource audioSource;
     private AudioSource bgmAudioSource;
     public int clickCount = 0;
@@ -33,6 +37,18 @@ public class SoundsManager : MonoBehaviour
         }
 
         PlayBackgroundMusic(backgroundMusicName);
+
+        // Initialize the sliders with the current volume levels
+        if (soundSlider != null)
+        {
+            soundSlider.value = audioSource.volume;
+            soundSlider.onValueChanged.AddListener(SetSoundVolume);
+        }
+        if (bgmSlider != null)
+        {
+            bgmSlider.value = bgmAudioSource.volume;
+            bgmSlider.onValueChanged.AddListener(SetBGMVolume);
+        }
     }
 
     private void PlayBackgroundMusic(string songName)
@@ -136,7 +152,6 @@ public class SoundsManager : MonoBehaviour
 
     private void DisableButtons(bool disable)
     {
-
         // Disable or enable additional buttons
         foreach (Button button in additionalButtons)
         {
@@ -144,6 +159,23 @@ public class SoundsManager : MonoBehaviour
             {
                 button.interactable = !disable;
             }
+        }
+    }
+
+    // Methods to set the volume based on slider values
+    public void SetSoundVolume(float volume)
+    {
+        if (audioSource != null)
+        {
+            audioSource.volume = volume;
+        }
+    }
+
+    public void SetBGMVolume(float volume)
+    {
+        if (bgmAudioSource != null)
+        {
+            bgmAudioSource.volume = volume;
         }
     }
 }
