@@ -9,6 +9,11 @@ public class AnimationManager : MonoBehaviour
         animator.SetTrigger("Feed");
     }
 
+    public void PlayPlayAnimation()
+    {
+        animator.SetTrigger("Play");
+    }
+
     public void PlayBathAnimation()
     {
         animator.SetTrigger("Bath");

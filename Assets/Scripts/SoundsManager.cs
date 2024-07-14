@@ -8,11 +8,10 @@ public class SoundsManager : MonoBehaviour
     public GameObject bubble;
     public AudioClip[] songs;
     public TMP_Text bubbleText;
-    public Button[] additionalButtons; // Array to hold other buttons to be disabled
+    public Button[] additionalButtons; 
     public string backgroundMusicName;
     public AnimationManager animationManager;
 
-    // Add references to the sliders
     public Slider soundSlider;
     public Slider bgmSlider;
 
@@ -38,7 +37,6 @@ public class SoundsManager : MonoBehaviour
 
         PlayBackgroundMusic(backgroundMusicName);
 
-        // Initialize the sliders with the current volume levels
         if (soundSlider != null)
         {
             soundSlider.value = audioSource.volume;
@@ -102,6 +100,7 @@ public class SoundsManager : MonoBehaviour
     public void PlayPlaySound()
     {
         PlayCurrentSong("play");
+        animationManager.PlayPlayAnimation();
         StartCoroutine(ShowTemporaryText("purrr", 1, 3));
     }
 
@@ -143,16 +142,13 @@ public class SoundsManager : MonoBehaviour
 
     private IEnumerator ResetIsSoundPlaying(float duration)
     {
-        // Disable all relevant buttons
         DisableButtons(true);
         yield return new WaitForSeconds(duration);
-        // Enable all relevant buttons
         DisableButtons(false);
     }
 
     private void DisableButtons(bool disable)
     {
-        // Disable or enable additional buttons
         foreach (Button button in additionalButtons)
         {
             if (button != null)
@@ -162,7 +158,6 @@ public class SoundsManager : MonoBehaviour
         }
     }
 
-    // Methods to set the volume based on slider values
     public void SetSoundVolume(float volume)
     {
         if (audioSource != null)
